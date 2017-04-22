@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Log4j最主要的三大基本构件： -->
+    <!-- 1．Appenders（定义了log信息输出的设备，log信息应该被输出到什么地方，控制台、文件（数据库）、网络设备等） -->
+    <!-- 2．Layouts（对log信息进行格式化） -->
+    <!-- 3．Categories（对log信息进行分类筛选，通俗的讲就是什么信息应该被输出，什么log信息应该被忽略） -->
+
+   <appender name="consoleAppend" class="org.apache.log4j.ConsoleAppender" >
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %l - %m%n" />
+        </layout>
+    </appender>
+
+
+    <!-- 错误级别日志文件设置 这个错误日志只记录error级别以上的信息，大小自定义，超过则或者再生成一份或者追加覆盖，不备份 -->
+    <!-- RollingFileAppender继承了FileAppender -->
+    <appender
+        name="errorRollingFileAppender"
+        class="org.apache.log4j.RollingFileAppender">
+        <param
+            name="File"
+            value="${webapp.root}/logs/error.log" />
+        <param
+            name="Threshold"
+            value="ERROR" />
+        <param
+            name="MaxFileSize"
+            value="1000KB" />
+        <param
+            name="MaxBackupIndex"
+            value="1" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param
+                name="ConversionPattern"
+                value="%d %-5p %l - %m%n" />
+        </layout>
+    </appender>
+    <!-- '.'yyyy-MM: 每月 -->
+    <!-- '.'yyyy-ww: 每周 -->
+    <!-- '.'yyyy-MM-dd: 每天 -->
+    <!-- '.'yyyy-MM-dd-a: 每天两次 -->
+    <!-- '.'yyyy-MM-dd-HH: 每小时 -->
+    <!-- '.'yyyy-MM-dd-HH-mm: 每分钟 -->
+    <appender
+        name="dailyRollingFileAppender"
+        class="org.apache.log4j.DailyRollingFileAppender">
+        <param
+            name="File"
+            value="${webapp.root}/logs/normal.log" />
+        <param
+            name="DatePattern"
+            value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param
+                name="ConversionPattern"
+                value="%d %-5p %c{2} - %m%n" />
+        </layout>
+    </appender>
+    <!-- 对指定的包设定日志级别，主要目的是减少不必要的日志 -->
+    <logger name="cn.com.reey.VMSweb">
+        <level value="DEBUG" />
+    </logger>
+    <root>
+
+        <!-- TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
+        <priority value="INFO" />
+
+        <!-- 控制台输出，生产环境中可去掉 -->
+        <appender-ref ref="consoleAppend" />
+
+        <!-- 使用备份机制 -->
+        <appender-ref ref="dailyRollingFileAppender" />
+        <!-- 同时也写error.log -->
+        <appender-ref ref="errorRollingFileAppender" />
+    </root>
+
+</log4j:configuration>
