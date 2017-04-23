@@ -2,22 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tx="http://www.springframework.org/schema/tx"
-    xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
-        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-        http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
         ">
 
     
     <!-- 加载资源文件  其中包含变量信息-->
-    <context:property-placeholder location="classpath:main.properties" />
+    <context:property-placeholder location="classpath:local.properties" />
     
     
     <!-- 让Spring通过自动扫描来查询和管理Bean -->
